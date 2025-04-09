@@ -107,7 +107,9 @@ Functions that process lists **must be recursive**.
 For each function below, you must:
 1. **Write your tests first** in a file called `test_student.py`
 2. Write at least **1 test per function**
-3. Confirm your test(s) pass before continuing
+  - For example: self.assertAlmostEqual(actual, expected, places=4)
+4. Confirm your test(s) pass before continuing
+   
 
 > Your code will be evaluated using **hidden test cases**, so feel confident that your implementation handles **edge cases, invalid input, and boundary conditions**.
 
@@ -166,6 +168,7 @@ Returns a **new RegionCondition** representing the projected state of the region
 
 #### Rules:
 - Population grows exponentially based on the terrain type’s growth rate
+- Use p*e^(rt) continous growth equation
 - Emissions scale proportionally with population
 - The region and terrain stay the same
 - The `year` field increases by `years`
