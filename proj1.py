@@ -71,3 +71,23 @@ def densest(rc_list: list[RegionCondition], idx = 1) -> str|None:
     return densest(rc_list, idx + 1)
 #check this
 
+#task4
+#preconditions:
+#postconditions:
+#Creates a new RegionCondition using projected data after a certain amount of years
+def project_condition(rc: RegionCondition, years: int) -> RegionCondition:
+    pass
+
+#helper function for project_condition
+#preconditions:
+#postconditions:
+#applies annual growth rate depending on terrain
+def growth_rate(rc: RegionCondition, years: int) -> float:
+    if rc.region.terrain == 'ocean':
+        return rc.pop * (years * 0.0001)
+    if rc.region.terrain == 'mountains':
+        return rc.pop * (years * 0.0005)
+    if rc.region.terrain == 'forest':
+        return rc.pop * (years * (-0.00001))
+    if rc.region.terrain == 'other':
+        return rc.pop * (years * 0.0003)
