@@ -12,6 +12,9 @@ class TestRegionFunctions(unittest.TestCase):
     def test_holder(self):
         pass
 
+    def test_emissions_per_square_km(self):
+        self.assertEqual(emissions_per_capita())
+
 
 if __name__ == '__main__':
     unittest.main()
