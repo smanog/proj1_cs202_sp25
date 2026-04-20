@@ -42,23 +42,28 @@ def emissions_per_capita(rc: RegionCondition)-> float:
 #postconditions:
 #calculates the estimated surface area of the region in square kilometers
 def area(gr: GlobeRect) -> float:
-    pass
-    #if bleh:
-        #return a * b * c
-    #return area(gr)
+    r = 6378.1 ** 2
+    we_long = abs((gr.east_long * (math.pi / 180)) - (gr.west_long * (math.pi / 180)))
+    lh_lat = abs((math.sin((gr.hi_lat * (math.pi / 180))) - (math.sin((gr.lo_lat * (math.pi / 180))))))
+    return r * we_long * lh_lat
+
 
 #preconditions:
 #postconditions:
 #calculates the tons of Co2-equivalent per square kilometer using the area function
 def emissions_per_square_km(rc: RegionCondition) -> float:
-    pass
+    a = area(rc.region.rect)
+    return rc.ghg_rate / a
+
 
 #preconditions:
 #postconditions:
 #returns region with the highest population density
-def densest(rc_list: list[RegionCondition]) -> Region|None:
+def densest(rc_list: list[RegionCondition], idx = 0) -> Region|None:
     if len(rc_list) == 0:
         return None
+    if idx == len(rc_list):
+        return rc_list[idx].region
     if rc_list[0].pop / area(rc_list[0].region) > 0:
         return rc_list[0].region
 #check this
