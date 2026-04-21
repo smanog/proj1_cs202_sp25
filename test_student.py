@@ -16,6 +16,7 @@ class TestRegionFunctions(unittest.TestCase):
     def test_emissions_per_capita(self):
         self.assertAlmostEqual(emissions_per_capita(RegionCondition(Region(GlobeRect(34.0, 35.0, -118.0, -117.0), 'Los Angeles', 'other'), 2026, 3869890, 430)), 0.0001, 4)
         self.assertEqual(emissions_per_capita(RegionCondition(Region(GlobeRect(33,34,151, 152), 'Sydney', 'other'), 2026, 0, 520)), 0.0)
+        self.assertAlmostEqual(emissions_per_capita(RegionCondition(Region(GlobeRect(35, 38, 120, 39), 'Paso Robles', 'other'), 2026, 30, 100)), 3.3333, 4)
 
     def test_area(self):
         self.assertAlmostEqual(area(self.rect), 10212.3475, 4)
