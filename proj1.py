@@ -76,8 +76,9 @@ def densest(rc_list: list[RegionCondition], idx = 1) -> str|None:
 #postconditions:
 #Creates a new RegionCondition using projected data after a certain amount of years
 def project_condition(rc: RegionCondition, years: int) -> RegionCondition:
-    new_rc = RegionCondition(Region(GlobeRect(rc.region.rect.hi_lat, rc.region.rect.lo_lat, rc.region.rect.west_long, rc.region.rect.east_long), rc.region.name, rc.region.terrain), rc.year + years, growth_rate(rc, years), rc.ghg_rate)
+    new_rc = RegionCondition(Region(GlobeRect(rc.region.rect.hi_lat, rc.region.rect.lo_lat, rc.region.rect.west_long, rc.region.rect.east_long), rc.region.name, rc.region.terrain), rc.year + years, growth_rate(rc, years), scale_ghg(rc, years))
     return new_rc
+
 
 #helper function for project_condition
 #preconditions:
@@ -85,10 +86,18 @@ def project_condition(rc: RegionCondition, years: int) -> RegionCondition:
 #applies annual growth rate depending on terrain
 def growth_rate(rc: RegionCondition, years: int) -> int:
     if rc.region.terrain == 'ocean':
-        return rc.pop * (years * 0.0001)
+        return int(rc.pop * (years * 0.0001))
     if rc.region.terrain == 'mountains':
-        return rc.pop * (years * 0.0005)
+        return int(rc.pop * (years * 0.0005))
     if rc.region.terrain == 'forest':
-        return rc.pop * (years * (-0.00001))
+        return int(rc.pop * (years * (-0.00001)))
     if rc.region.terrain == 'other':
-        return rc.pop * (years * 0.0003)
+        return int(rc.pop * (years * 0.0003))
+
+#helper function for project_condition
+#preconditions:
+#postconditions:
+#scales emissions proportionately with the population
+def scale_ghg(rc: RegionCondition, years: int) -> float:
+     ghg = rc.ghg_rate + (emissions_per_capita(rc) * growth_rate(rc, years))
+     return ghg
