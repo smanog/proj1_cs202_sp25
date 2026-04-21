@@ -72,7 +72,7 @@ def densest(rc_list: list[RegionCondition], idx = 1) -> str|None:
         dense = rc_list[idx]
         return dense.region.name
     return densest(rc_list, idx + 1)
-#check this
+
 
 #task4
 #inputs a RegionCondition and years
