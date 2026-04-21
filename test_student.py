@@ -12,7 +12,7 @@ class TestRegionFunctions(unittest.TestCase):
     def test_holder(self):
         pass
 
-    def test_emissions_per_square_km(self):
+    def test_emissions_per_capita(self):
         self.assertEqual(emissions_per_capita(RegionCondition(Region(GlobeRect(34.0, 35.0, -118.0, -117.0), 'Los Angeles', 'other'), 2026, 3869890, 430)), 0.00011111426939783818)
 
 

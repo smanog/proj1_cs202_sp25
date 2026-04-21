@@ -27,7 +27,7 @@ class RegionCondition:
 region_conditions = [RegionCondition(Region(GlobeRect(34.0, 35.0, -118.0, -117.0), 'Los Angeles', 'other'), 2026, 3869890, 430), RegionCondition(Region(GlobeRect(33,34,151, 152), 'Sydney', 'other'), 2026, 5312640, 400), RegionCondition(Region(GlobeRect(0, 1, 160, 161), 'Pacific Ocean', 'ocean'), 2026, 0, 0), RegionCondition(Region(GlobeRect(35, 38, 120, 39), 'Paso Robles', 'mountains'), 2026, 30, 32)]
 
 #task3
-#precondtions:
+#precondtions: The population isn't zero
 #postconditions:
 #calculates the tons of Co2 that is emitted per person in a region
 def emissions_per_capita(rc: RegionCondition)-> float:
@@ -36,7 +36,7 @@ def emissions_per_capita(rc: RegionCondition)-> float:
     if rc.pop > 0:
         return rc.ghg_rate / rc.pop
     return emissions_per_capita(rc)
-#check this one
+
 
 #preconditions:
 #postconditions:
@@ -93,6 +93,7 @@ def growth_rate(rc: RegionCondition, years: int) -> int:
         return int(rc.pop * (years * (-0.00001)))
     if rc.region.terrain == 'other':
         return int(rc.pop * (years * 0.0003))
+    return growth_rate(rc, years)
 
 #helper function for project_condition
 #preconditions:
