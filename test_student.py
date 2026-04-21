@@ -23,6 +23,7 @@ class TestRegionFunctions(unittest.TestCase):
 
     def test_emissions_per_square_km(self):
         self.assertAlmostEqual(emissions_per_square_km(RegionCondition(Region(GlobeRect(34.0, 35.0, -118.0, -117.0), 'Los Angeles', 'other'), 2026, 3869890, 430)), 0.0421, 4)
+        self.assertAlmostEqual(emissions_per_square_km(self.rc), 0.0503, 4)
 
     def test_densest(self):
         self.assertEqual(densest(region_conditions), 'Sydney')
@@ -31,10 +32,12 @@ class TestRegionFunctions(unittest.TestCase):
     def test_growth_rate(self):
         self.assertEqual(growth_rate(RegionCondition(Region(GlobeRect(34.0, 35.0, -118.0, -117.0), 'Los Angeles', 'other'), 2026, 3869890, 430),5),5804)
         self.assertAlmostEqual(growth_rate(self.rc, 1), 0, 4)
+        self.assertAlmostEqual(growth_rate(self.rc, 0), 0, 4)
 
     def test_scale_ghg(self):
         self.assertAlmostEqual(scale_ghg(RegionCondition(Region(GlobeRect(34.0, 35.0, -118.0, -117.0), 'Los Angeles', 'other'), 2026, 3869890, 430), 5), 430.6449, 4)
         self.assertAlmostEqual(scale_ghg(self.rc, 1), 520, 4)
+        self.assertAlmostEqual(scale_ghg(self.rc, 0), 520, 4)
 
 if __name__ == '__main__':
     unittest.main()
