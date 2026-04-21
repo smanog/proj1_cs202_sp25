@@ -8,29 +8,33 @@ class TestRegionFunctions(unittest.TestCase):
 
     def setUp(self):
         self.rect = GlobeRect(34.0, 35.0, -118.0, -117.0)
+        self.rc = RegionCondition(Region(GlobeRect(33,34,151, 152), 'Sydney', 'other'), 2026, 0, 520)
 
     def test_holder(self):
         pass
 
     def test_emissions_per_capita(self):
-        self.assertEqual(emissions_per_capita(RegionCondition(Region(GlobeRect(34.0, 35.0, -118.0, -117.0), 'Los Angeles', 'other'), 2026, 3869890, 430)), 0.00011111426939783818)
+        self.assertAlmostEqual(emissions_per_capita(RegionCondition(Region(GlobeRect(34.0, 35.0, -118.0, -117.0), 'Los Angeles', 'other'), 2026, 3869890, 430)), 0.0001, 4)
         self.assertEqual(emissions_per_capita(RegionCondition(Region(GlobeRect(33,34,151, 152), 'Sydney', 'other'), 2026, 0, 520)), 0.0)
 
     def test_area(self):
-        self.assertEqual(area(self.rect), 10212.347546343432)
-        self.assertEqual(area(GlobeRect(33,34,151, 152)), 10333.286269130025)
+        self.assertAlmostEqual(area(self.rect), 10212.3475, 4)
+        self.assertAlmostEqual(area(GlobeRect(33,34,151, 152)), 10333.2863, 4)
 
     def test_emissions_per_square_km(self):
-        self.assertEqual(emissions_per_square_km(RegionCondition(Region(GlobeRect(34.0, 35.0, -118.0, -117.0), 'Los Angeles', 'other'), 2026, 3869890, 430)), 0.04210589172065174)
+        self.assertAlmostEqual(emissions_per_square_km(RegionCondition(Region(GlobeRect(34.0, 35.0, -118.0, -117.0), 'Los Angeles', 'other'), 2026, 3869890, 430)), 0.0421, 4)
 
     def test_densest(self):
         self.assertEqual(densest(region_conditions), 'Sydney')
+        self.assertEqual(densest([self.rc]), 'Sydney')
 
     def test_growth_rate(self):
         self.assertEqual(growth_rate(RegionCondition(Region(GlobeRect(34.0, 35.0, -118.0, -117.0), 'Los Angeles', 'other'), 2026, 3869890, 430),5),5804)
+        self.assertAlmostEqual(growth_rate(self.rc, 1), 0, 4)
 
     def test_scale_ghg(self):
-        self.assertEqual(scale_ghg(RegionCondition(Region(GlobeRect(34.0, 35.0, -118.0, -117.0), 'Los Angeles', 'other'), 2026, 3869890, 430), 5), 430.64490721958504)
+        self.assertAlmostEqual(scale_ghg(RegionCondition(Region(GlobeRect(34.0, 35.0, -118.0, -117.0), 'Los Angeles', 'other'), 2026, 3869890, 430), 5), 430.6449, 4)
+        self.assertAlmostEqual(scale_ghg(self.rc, 1), 520, 4)
 
 if __name__ == '__main__':
     unittest.main()

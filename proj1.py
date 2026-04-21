@@ -62,7 +62,7 @@ def emissions_per_square_km(rc: RegionCondition) -> float:
 
 #inputs a list of RegionConditions and an idx
 #returns region with the highest population density
-def densest(rc_list: list[RegionCondition], idx = 1) -> str|None:
+def densest(rc_list: list[RegionCondition], idx = 1) -> str:
     if len(rc_list) == 1:
         return rc_list[0].region.name
     if idx == len(rc_list) - 1:
