@@ -27,8 +27,8 @@ class RegionCondition:
 region_conditions = [RegionCondition(Region(GlobeRect(34.0, 35.0, -118.0, -117.0), 'Los Angeles', 'other'), 2026, 3869890, 430), RegionCondition(Region(GlobeRect(33,34,151, 152), 'Sydney', 'other'), 2026, 5312640, 400), RegionCondition(Region(GlobeRect(0, 1, 160, 161), 'Pacific Ocean', 'ocean'), 2026, 0, 0), RegionCondition(Region(GlobeRect(35, 38, 120, 39), 'Paso Robles', 'mountains'), 2026, 30, 32)]
 
 #task3
-#precondtions: The population isn't zero
-#postconditions:
+#inputs a RegionCondition
+#outputs a float
 #calculates the tons of Co2 that is emitted per person in a region
 def emissions_per_capita(rc: RegionCondition)-> float:
     if rc.pop == 0:
@@ -38,8 +38,8 @@ def emissions_per_capita(rc: RegionCondition)-> float:
     return emissions_per_capita(rc)
 
 
-#preconditions:
-#postconditions:
+#inputs a GlobeRect
+#outputs a float
 #calculates the estimated surface area of the region in square kilometers
 def area(gr: GlobeRect) -> float:
     r = 6378.1 ** 2
@@ -48,16 +48,15 @@ def area(gr: GlobeRect) -> float:
     return r * we_long * lh_lat
 
 
-#preconditions:
-#postconditions:
+#inputs a RegionCondition
+#outputs a float
 #calculates the tons of Co2-equivalent per square kilometer using the area function
 def emissions_per_square_km(rc: RegionCondition) -> float:
     a = area(rc.region.rect)
     return rc.ghg_rate / a
 
 
-#preconditions:
-#postconditions:
+#inputs a list of RegionConditions and an idx
 #returns region with the highest population density
 def densest(rc_list: list[RegionCondition], idx = 1) -> str|None:
     if len(rc_list) == 1:
@@ -72,8 +71,8 @@ def densest(rc_list: list[RegionCondition], idx = 1) -> str|None:
 #check this
 
 #task4
-#preconditions:
-#postconditions:
+#inputs a RegionCondition and years
+#outputs a new RegionCondition
 #Creates a new RegionCondition using projected data after a certain amount of years
 def project_condition(rc: RegionCondition, years: int) -> RegionCondition:
     new_rc = RegionCondition(Region(GlobeRect(rc.region.rect.hi_lat, rc.region.rect.lo_lat, rc.region.rect.west_long, rc.region.rect.east_long), rc.region.name, rc.region.terrain), rc.year + years, growth_rate(rc, years), scale_ghg(rc, years))
@@ -81,8 +80,8 @@ def project_condition(rc: RegionCondition, years: int) -> RegionCondition:
 
 
 #helper function for project_condition
-#preconditions:
-#postconditions:
+#inputs a RegionCondition and years
+#outputs an int
 #applies annual growth rate depending on terrain
 def growth_rate(rc: RegionCondition, years: int) -> int:
     if rc.region.terrain == 'ocean':
@@ -96,8 +95,8 @@ def growth_rate(rc: RegionCondition, years: int) -> int:
     return growth_rate(rc, years)
 
 #helper function for project_condition
-#preconditions:
-#postconditions:
+#inputs a RegionCondition and years
+#outputs a float
 #scales emissions proportionately with the population
 def scale_ghg(rc: RegionCondition, years: int) -> float:
      ghg = rc.ghg_rate + (emissions_per_capita(rc) * growth_rate(rc, years))
