@@ -18,6 +18,7 @@ class TestRegionFunctions(unittest.TestCase):
 
     def test_area(self):
         self.assertEqual(area(self.rect), 10212.347546343432)
+        self.assertEqual(area(GlobeRect(33,34,151, 152)), 10333.286269130025)
 
     def test_emissions_per_square_km(self):
         self.assertEqual(emissions_per_square_km(RegionCondition(Region(GlobeRect(34.0, 35.0, -118.0, -117.0), 'Los Angeles', 'other'), 2026, 3869890, 430)), 0.04210589172065174)
