@@ -41,7 +41,7 @@ class TestRegionFunctions(unittest.TestCase):
         self.assertAlmostEqual(scale_ghg(self.rc, 0), 520, 4)
 
     def test_project_condition(self):
-        self.assertEqual(project_condition(self.rc, 5), self.rc)
+        self.assertEqual(project_condition(self.rc, 5), RegionCondition(Region(GlobeRect(34, 33, 151, 152), 'Sydney', 'other'), 2031, 0, 520.0))
 
 if __name__ == '__main__':
     unittest.main()
