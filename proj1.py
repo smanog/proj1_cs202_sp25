@@ -24,7 +24,7 @@ class RegionCondition:
     ghg_rate: float
 
 #task2 creating example data
-region_conditions = [RegionCondition(Region(GlobeRect(34.0, 35.0, -118.0, -117.0), 'Los Angeles', 'other'), 2026, 3869890, 430), RegionCondition(Region(GlobeRect(33,34,151, 152), 'Sydney', 'other'), 2026, 5312640, 400), RegionCondition(Region(GlobeRect(0, 1, 160, 161), 'Pacific Ocean', 'ocean'), 2026, 0, 0), RegionCondition(Region(GlobeRect(35, 38, 120, 39), 'Paso Robles', 'mountains'), 2026, 30, 32)]
+region_conditions = [RegionCondition(Region(GlobeRect(34.0, 35.0, -118.0, -117.0), 'Los Angeles', 'other'), 2026, 3869890, 430), RegionCondition(Region(GlobeRect(33,34,151, 152), 'Sydney', 'other'), 2026, 5312640, 520), RegionCondition(Region(GlobeRect(0, 1, 160, 161), 'Pacific Ocean', 'ocean'), 2026, 13, 0), RegionCondition(Region(GlobeRect(35, 38, 120, 39), 'Paso Robles', 'other'), 2026, 30, 100)]
 
 #task3
 #inputs a RegionCondition
@@ -44,7 +44,11 @@ def emissions_per_capita(rc: RegionCondition)-> float:
 def area(gr: GlobeRect) -> float:
     r = 6378.1 ** 2
     we_long = abs((gr.east_long * (math.pi / 180)) - (gr.west_long * (math.pi / 180)))
+    if we_long < 0:
+        we_long += 2 * math.pi
     lh_lat = abs((math.sin((gr.hi_lat * (math.pi / 180))) - (math.sin((gr.lo_lat * (math.pi / 180))))))
+    if lh_lat < 0:
+        lh_lat += 2 * math.pi
     return r * we_long * lh_lat
 
 
@@ -101,3 +105,4 @@ def growth_rate(rc: RegionCondition, years: int) -> int:
 def scale_ghg(rc: RegionCondition, years: int) -> float:
      ghg = rc.ghg_rate + (emissions_per_capita(rc) * growth_rate(rc, years))
      return ghg
+
