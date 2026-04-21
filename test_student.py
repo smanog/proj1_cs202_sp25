@@ -8,7 +8,7 @@ class TestRegionFunctions(unittest.TestCase):
 
     def setUp(self):
         self.rect = GlobeRect(34.0, 35.0, -118.0, -117.0)
-        self.rc = RegionCondition(Region(GlobeRect(33,34,151, 152), 'Sydney', 'other'), 2026, 0, 520)
+        self.rc = RegionCondition(Region(GlobeRect(33,34,151, 152), 'Sydney', 'other'), 2026, 20, 520)
 
     def test_holder(self):
         pass
@@ -39,6 +39,9 @@ class TestRegionFunctions(unittest.TestCase):
         self.assertAlmostEqual(scale_ghg(RegionCondition(Region(GlobeRect(34.0, 35.0, -118.0, -117.0), 'Los Angeles', 'other'), 2026, 3869890, 430), 5), 430.6449, 4)
         self.assertAlmostEqual(scale_ghg(self.rc, 1), 520, 4)
         self.assertAlmostEqual(scale_ghg(self.rc, 0), 520, 4)
+
+    def test_project_condition(self):
+        self.assertEqual(project_condition(self.rc, 5), self.rc)
 
 if __name__ == '__main__':
     unittest.main()

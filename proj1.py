@@ -75,14 +75,6 @@ def densest(rc_list: list[RegionCondition], idx = 1) -> str:
 
 
 #task4
-#inputs a RegionCondition and years
-#outputs a new RegionCondition
-#Creates a new RegionCondition using projected data after a certain amount of years
-def project_condition(rc: RegionCondition, years: int) -> RegionCondition:
-    new_rc = RegionCondition(Region(GlobeRect(rc.region.rect.hi_lat, rc.region.rect.lo_lat, rc.region.rect.west_long, rc.region.rect.east_long), rc.region.name, rc.region.terrain), rc.year + years, growth_rate(rc, years), scale_ghg(rc, years))
-    return new_rc
-
-
 #helper function for project_condition
 #inputs a RegionCondition and years
 #outputs an int
@@ -106,3 +98,11 @@ def scale_ghg(rc: RegionCondition, years: int) -> float:
      ghg = rc.ghg_rate + (emissions_per_capita(rc) * growth_rate(rc, years))
      return ghg
 
+#inputs a RegionCondition and years
+#outputs a new RegionCondition
+#Creates a new RegionCondition using projected data after a certain amount of years
+def project_condition(rc: RegionCondition, years: int) -> RegionCondition:
+    new_pop = growth_rate(rc, years)
+    new_ghg = scale_ghg(rc, years)
+    new_rc = RegionCondition(Region(GlobeRect(rc.region.rect.hi_lat, rc.region.rect.lo_lat, rc.region.rect.west_long, rc.region.rect.east_long), rc.region.name, rc.region.terrain), rc.year + years, new_pop, new_ghg)
+    return new_rc
